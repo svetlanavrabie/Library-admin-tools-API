@@ -52,3 +52,6 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 .DS_Store
+
+# Upgrade tracking files (local only)
+.github/upgrades/
