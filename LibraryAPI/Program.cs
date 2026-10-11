@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -108,7 +109,7 @@ builder.Services.AddScoped<ICourseLibraryRepository, CourseLibraryRepository>();
 builder.Services.AddDbContext<CourseLibraryContext>(options =>
 {
     options.UseSqlServer(
-        @"Server=your server name;Database=your db name;Trusted_Connection=True;TrustServerCertificate=True;");
+        builder.Configuration.GetConnectionString("CourseLibraryDB"));
 });
 
 // Swagger / OpenAPI
