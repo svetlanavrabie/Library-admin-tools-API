@@ -106,6 +106,22 @@ namespace LibraryAPI.Migrations
                             FirstName = "Atherton",
                             LastName = "Crow Ridley",
                             MainCategory = "Rum"
+                        },
+                        new
+                        {
+                            Id = new Guid("a1f4c3d2-6b7e-4c8a-9d10-1e2f3a4b5c6d"),
+                            DateOfBirth = new DateTimeOffset(new DateTime(1710, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -5, 0, 0, 0)),
+                            FirstName = "Josephine",
+                            LastName = "Silver Tongue Marlowe",
+                            MainCategory = "Navigation"
+                        },
+                        new
+                        {
+                            Id = new Guid("b2e5d4c3-7c8f-4d9b-8e21-2f3a4b5c6d7e"),
+                            DateOfBirth = new DateTimeOffset(new DateTime(1695, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, -4, 0, 0, 0)),
+                            FirstName = "Bartholomew",
+                            LastName = "Iron Hook Dunmore",
+                            MainCategory = "Treasure"
                         });
                 });
 
@@ -161,6 +177,34 @@ namespace LibraryAPI.Migrations
                             AuthorId = new Guid("2902b665-1190-4c70-9915-b9c2d7680450"),
                             Description = "In this course you'll learn how to sing all-time favourite pirate songs without sounding like you actually know the words or how to hold a note.",
                             Title = "Singalong Pirate Hits"
+                        },
+                        new
+                        {
+                            Id = new Guid("c3f6e5d4-8d90-4eac-9f32-3a4b5c6d7e8f"),
+                            AuthorId = new Guid("a1f4c3d2-6b7e-4c8a-9d10-1e2f3a4b5c6d"),
+                            Description = "Learn to navigate open seas using only the night sky.",
+                            Title = "Reading the Stars Without a Compass"
+                        },
+                        new
+                        {
+                            Id = new Guid("d4a7f6e5-9ea1-4fbd-8a43-4b5c6d7e8f90"),
+                            AuthorId = new Guid("b2e5d4c3-7c8f-4d9b-8e21-2f3a4b5c6d7e"),
+                            Description = "Techniques for hiding your loot and drawing maps only you can read.",
+                            Title = "Burying Treasure Like a Professional"
+                        },
+                        new
+                        {
+                            Id = new Guid("e5b8a7f6-afb2-40ce-9b54-5c6d7e8f9a01"),
+                            AuthorId = new Guid("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
+                            Description = "A practical guide to charting coastlines and hidden coves.",
+                            Title = "Mapping Uncharted Islands"
+                        },
+                        new
+                        {
+                            Id = new Guid("f6c9b8a7-b0c3-41df-8c65-6d7e8f9a0b12"),
+                            AuthorId = new Guid("2ee49fe3-edf2-4f91-8409-3eb25ce6ca51"),
+                            Description = "Make rum from ship supplies when the barrels run dry.",
+                            Title = "Brewing Your Own Rum at Sea"
                         });
                 });
 

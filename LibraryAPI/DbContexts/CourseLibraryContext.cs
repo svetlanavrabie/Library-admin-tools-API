@@ -1,4 +1,4 @@
-﻿using CourseLibrary.API.Entities;
+using CourseLibrary.API.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -73,6 +73,22 @@ namespace CourseLibrary.API.DbContexts
                     LastName = "Crow Ridley",
                     DateOfBirth = new DateTime(1721, 10, 11),
                     MainCategory = "Rum"
+                },
+                new Author()
+                {
+                    Id = Guid.Parse("a1f4c3d2-6b7e-4c8a-9d10-1e2f3a4b5c6d"),
+                    FirstName = "Josephine",
+                    LastName = "Silver Tongue Marlowe",
+                    DateOfBirth = new DateTime(1710, 2, 14),
+                    MainCategory = "Navigation"
+                },
+                new Author()
+                {
+                    Id = Guid.Parse("b2e5d4c3-7c8f-4d9b-8e21-2f3a4b5c6d7e"),
+                    FirstName = "Bartholomew",
+                    LastName = "Iron Hook Dunmore",
+                    DateOfBirth = new DateTime(1695, 9, 2),
+                    MainCategory = "Treasure"
                 }
                 );
 
@@ -104,6 +120,34 @@ namespace CourseLibrary.API.DbContexts
                    AuthorId = Guid.Parse("2902b665-1190-4c70-9915-b9c2d7680450"),
                    Title = "Singalong Pirate Hits",
                    Description = "In this course you'll learn how to sing all-time favourite pirate songs without sounding like you actually know the words or how to hold a note."
+               },
+               new Course
+               {
+                   Id = Guid.Parse("c3f6e5d4-8d90-4eac-9f32-3a4b5c6d7e8f"),
+                   AuthorId = Guid.Parse("a1f4c3d2-6b7e-4c8a-9d10-1e2f3a4b5c6d"),
+                   Title = "Reading the Stars Without a Compass",
+                   Description = "Learn to navigate open seas using only the night sky."
+               },
+               new Course
+               {
+                   Id = Guid.Parse("d4a7f6e5-9ea1-4fbd-8a43-4b5c6d7e8f90"),
+                   AuthorId = Guid.Parse("b2e5d4c3-7c8f-4d9b-8e21-2f3a4b5c6d7e"),
+                   Title = "Burying Treasure Like a Professional",
+                   Description = "Techniques for hiding your loot and drawing maps only you can read."
+               },
+               new Course
+               {
+                   Id = Guid.Parse("e5b8a7f6-afb2-40ce-9b54-5c6d7e8f9a01"),
+                   AuthorId = Guid.Parse("5b3621c0-7b12-4e80-9c8b-3398cba7ee05"),
+                   Title = "Mapping Uncharted Islands",
+                   Description = "A practical guide to charting coastlines and hidden coves."
+               },
+               new Course
+               {
+                   Id = Guid.Parse("f6c9b8a7-b0c3-41df-8c65-6d7e8f9a0b12"),
+                   AuthorId = Guid.Parse("2ee49fe3-edf2-4f91-8409-3eb25ce6ca51"),
+                   Title = "Brewing Your Own Rum at Sea",
+                   Description = "Make rum from ship supplies when the barrels run dry."
                }
                );
 
