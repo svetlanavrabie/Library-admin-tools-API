@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using CourseLibrary.API.Entities;
 using CourseLibrary.API.Services;
 using LibraryAPI.ActionConstrains;
@@ -56,7 +56,7 @@ namespace LibraryAPI.Controllers
                 totalPages = authors.TotalPages
             };
 
-            Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(paginationMetadata));
+            Response.Headers["X-Pagination"] = System.Text.Json.JsonSerializer.Serialize(paginationMetadata);
 
             var links = CreateLinksForAuthors(resourcesParameters, authors.HasNext, authors.HasPrevious);
 
@@ -203,7 +203,7 @@ namespace LibraryAPI.Controllers
         public IActionResult GetAuthorsOptions()
         {
 
-            Response.Headers.Add("Allow", "GET,OPTIONS,POST");
+            Response.Headers["Allow"] = "GET,OPTIONS,POST";
 
             return Ok();
         }
@@ -334,3 +334,4 @@ namespace LibraryAPI.Controllers
         }
     }
 }
+
