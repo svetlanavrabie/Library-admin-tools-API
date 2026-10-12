@@ -1,0 +1,15 @@
+@if (Visible)
+{
+    <div class="overlay" @onclick="Cancel">
+        <div class="dialog" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title" @onclick:stopPropagation="true">
+            <h2 id="confirm-title">@Title</h2>
+            <p>@Message</p>
+            <div class="buttons">
+                <button type="button" class="btn btn-secondary" disabled="@IsBusy" @onclick="Cancel">Cancel</button>
+                <button type="button" class="btn btn-danger" disabled="@IsBusy" @onclick="Confirm">
+                    @(IsBusy ? "Deleting..." : ConfirmText)
+                </button>
+            </div>
+        </div>
+    </div>
+}

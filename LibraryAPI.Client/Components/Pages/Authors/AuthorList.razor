@@ -1,0 +1,74 @@
+@page "/"
+@page "/authors"
+
+<PageTitle>Authors - Library Admin</PageTitle>
+
+<PageHeader Title="Authors" Subtitle="Browse, search and manage the authors in the library.">
+    <Actions>
+        <a class="btn btn-primary" href="authors/new">Add author</a>
+    </Actions>
+</PageHeader>
+
+<form class="filters" @onsubmit="ApplyFiltersAsync">
+    <input class="input" type="search" placeholder="Search by name or category" aria-label="Search authors" @bind="_searchText" />
+    <input class="input" type="text" placeholder="Exact category" aria-label="Filter by main category" @bind="_categoryText" />
+    <button type="submit" class="btn btn-primary" disabled="@_isLoading">Search</button>
+    <button type="button" class="btn btn-secondary" disabled="@(_isLoading || !HasFilters)" @onclick="ClearFiltersAsync">Clear</button>
+</form>
+
+@if (_isLoading && _page is null)
+{
+    <StatePanel Kind="StateKind.Loading" Title="Loading authors..." />
+}
+else if (_errorMessage is not null)
+{
+    <StatePanel Kind="StateKind.Error" Title="Could not load authors" Message="@_errorMessage">
+        <button type="button" class="btn btn-primary" @onclick="LoadAsync">Try again</button>
+    </StatePanel>
+}
+else if (_page is { Items.Count: 0 })
+{
+    <StatePanel Kind="StateKind.Empty" Title="No authors found"
+                Message="@(HasFilters ? "No author matches the current filters." : "Start by adding the first author.")">
+        <a class="btn btn-primary" href="authors/new">Add author</a>
+    </StatePanel>
+}
+else if (_page is not null)
+{
+    <div class="table-wrap card" aria-busy="@_isLoading">
+        <table>
+            <thead>
+                <tr>
+                    <th><button type="button" class="sort" @onclick='() => SortByAsync("Name")'>Name @SortIndicator("Name")</button></th>
+                    <th><button type="button" class="sort" @onclick='() => SortByAsync("Age")'>Age @SortIndicator("Age")</button></th>
+                    <th><button type="button" class="sort" @onclick='() => SortByAsync("MainCategory")'>Category @SortIndicator("MainCategory")</button></th>
+                    <th class="right">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var author in _page.Items)
+                {
+                    <tr>
+                        <td data-label="Name"><a href="authors/@author.Id">@author.Name</a></td>
+                        <td data-label="Age">@author.Age</td>
+                        <td data-label="Category"><span class="badge">@author.MainCategory</span></td>
+                        <td class="right">
+                            <a class="btn btn-ghost" href="authors/@author.Id">Details</a>
+                            <button type="button" class="btn btn-ghost danger" @onclick="() => AskDelete(author)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <p class="summary">@_page.TotalCount author(s) in total</p>
+    <Pagination CurrentPage="_page.CurrentPage" TotalPages="_page.TotalPages" OnPageChanged="GoToPageAsync" />
+}
+
+<ConfirmDialog Visible="_authorToDelete is not null"
+               IsBusy="_isDeleting"
+               Title="Delete author"
+               Message="@($"Delete {_authorToDelete?.Name} and all of their courses? This cannot be undone.")"
+               OnConfirm="DeleteConfirmedAsync"
+               OnCancel="CancelDelete" />

@@ -1,0 +1,12 @@
+<div class="state state-@Kind.ToString().ToLowerInvariant()" role="@(Kind == StateKind.Error ? "alert" : "status")">
+    @if (Kind == StateKind.Loading)
+    {
+        <div class="spinner" aria-hidden="true"></div>
+    }
+    <h2>@Title</h2>
+    @if (!string.IsNullOrEmpty(Message))
+    {
+        <p>@Message</p>
+    }
+    @ChildContent
+</div>

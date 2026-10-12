@@ -1,0 +1,29 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: var(--space-4);
+    background: rgba(15, 27, 61, 0.55);
+    z-index: 1000;
+}
+
+.dialog {
+    width: min(26rem, 100%);
+    padding: var(--space-6);
+    background: var(--color-surface);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.dialog p {
+    color: var(--color-muted);
+    margin: var(--space-3) 0 var(--space-6);
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--space-3);
+}

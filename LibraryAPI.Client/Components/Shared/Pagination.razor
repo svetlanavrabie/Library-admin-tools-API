@@ -1,0 +1,8 @@
+@if (TotalPages > 1)
+{
+    <nav class="pager" aria-label="Pagination">
+        <button type="button" class="btn btn-secondary" disabled="@(!HasPrevious)" @onclick="() => GoTo(CurrentPage - 1)">Previous</button>
+        <span>Page @CurrentPage of @TotalPages</span>
+        <button type="button" class="btn btn-secondary" disabled="@(!HasNext)" @onclick="() => GoTo(CurrentPage + 1)">Next</button>
+    </nav>
+}

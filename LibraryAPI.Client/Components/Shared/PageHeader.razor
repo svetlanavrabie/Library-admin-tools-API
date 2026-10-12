@@ -1,0 +1,14 @@
+<div class="page-header">
+    <div class="titles">
+        @if (!string.IsNullOrEmpty(BackHref))
+        {
+            <a class="crumb" href="@BackHref">&larr; @BackText</a>
+        }
+        <h1>@Title</h1>
+        @if (!string.IsNullOrEmpty(Subtitle))
+        {
+            <p>@Subtitle</p>
+        }
+    </div>
+    <div class="actions">@Actions</div>
+</div>

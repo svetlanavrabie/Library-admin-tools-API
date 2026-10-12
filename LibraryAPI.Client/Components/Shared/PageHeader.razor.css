@@ -1,0 +1,30 @@
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.titles { min-width: 0; }
+
+.titles p {
+    margin: var(--space-1) 0 0;
+    color: var(--color-muted);
+}
+
+.crumb {
+    display: inline-block;
+    margin-bottom: var(--space-2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+}

@@ -1,0 +1,55 @@
+@page "/authors/{AuthorId:guid}/courses/new"
+@page "/authors/{AuthorId:guid}/courses/{CourseId:guid}/edit"
+
+<PageTitle>@PageHeading - Library Admin</PageTitle>
+
+<PageHeader Title="@PageHeading" BackHref="@($"authors/{AuthorId}")" BackText="Author" />
+
+@if (_isLoading)
+{
+    <StatePanel Kind="StateKind.Loading" Title="Loading course..." />
+}
+else if (_loadError is not null)
+{
+    <StatePanel Kind="StateKind.Error" Title="Could not load course" Message="@_loadError">
+        <a class="btn btn-primary" href="authors/@AuthorId">Back to author</a>
+    </StatePanel>
+}
+else
+{
+    <div class="card">
+        <EditForm Model="_form" OnValidSubmit="SubmitAsync" FormName="course-form">
+            <DataAnnotationsValidator />
+
+            @if (_serverErrors.Count > 0)
+            {
+                <ul class="validation-summary-list" role="alert">
+                    @foreach (var error in _serverErrors)
+                    {
+                        <li>@error</li>
+                    }
+                </ul>
+            }
+
+            <fieldset class="form-grid" disabled="@_isSubmitting">
+                <div class="field full">
+                    <label for="title">Title</label>
+                    <InputText id="title" @bind-Value="_form.Title" />
+                    <ValidationMessage For="() => _form.Title" />
+                </div>
+                <div class="field full">
+                    <label for="description">Description</label>
+                    <InputTextArea id="description" rows="6" @bind-Value="_form.Description" />
+                    <ValidationMessage For="() => _form.Description" />
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" disabled="@_isSubmitting">
+                    @(_isSubmitting ? "Saving..." : IsEdit ? "Save changes" : "Create course")
+                </button>
+                <a class="btn btn-secondary" href="authors/@AuthorId">Cancel</a>
+            </div>
+        </EditForm>
+    </div>
+}
