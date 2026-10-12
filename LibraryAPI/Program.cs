@@ -19,6 +19,8 @@ using System.Linq;
 
 var builder = WebApplication.CreateBuilder(args);
 
+#region Caching services
+
 builder.Services.AddHttpCacheHeaders(
     expirationModelOptions =>
     {
@@ -31,6 +33,10 @@ builder.Services.AddHttpCacheHeaders(
     });
 
 builder.Services.AddResponseCaching();
+
+#endregion
+
+#region Controllers and API behavior
 
 builder.Services.AddControllers(setupAction =>
 {
@@ -99,6 +105,10 @@ builder.Services.Configure<MvcOptions>(config =>
     }
 });
 
+#endregion
+
+#region Dependency injection and database
+
 builder.Services.AddTransient<IPropertyMappingService, PropertyMappingService>();
 builder.Services.AddTransient<IPropertyCheckerService, PropertyCheckerService>();
 
@@ -112,7 +122,10 @@ builder.Services.AddDbContext<CourseLibraryContext>(options =>
         builder.Configuration.GetConnectionString("CourseLibraryDB"));
 });
 
-// Swagger / OpenAPI
+#endregion
+
+#region Swagger / OpenAPI
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -131,11 +144,12 @@ builder.Services.AddSwaggerGen(options =>
     options.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
+#endregion
+
 var app = builder.Build();
 
-// ---------------------------------------------------------------------
-// Database migration (best practice: at startup, using a service scope)
-// ---------------------------------------------------------------------
+#region Database migration
+
 using (var scope = app.Services.CreateScope())
 {
     try
@@ -143,8 +157,15 @@ using (var scope = app.Services.CreateScope())
         var context = scope.ServiceProvider.GetRequiredService<CourseLibraryContext>();
         // for demo purposes, delete the database & migrate on startup so
         // we can start with a clean slate
-        context.Database.EnsureDeleted();
-        context.Database.Migrate();
+        if (context.Database.IsRelational())
+        {
+            context.Database.EnsureDeleted();
+            context.Database.Migrate();
+        }
+        else
+        {
+            context.Database.EnsureCreated();
+        }
     }
     catch (Exception ex)
     {
@@ -153,9 +174,10 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-// ---------------------------------------------------------------------
-// HTTP request pipeline
-// ---------------------------------------------------------------------
+#endregion
+
+#region HTTP request pipeline
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -188,4 +210,8 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+#endregion
+
 app.Run();
+
+public partial class Program { }
