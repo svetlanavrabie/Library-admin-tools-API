@@ -6,13 +6,18 @@
             <span></span><span></span><span></span>
         </button>
         <a class="brand" href="">
-            <span class="brand-mark" aria-hidden="true">L</span>
+            <img class="brand-mark" src="/favicon.svg?v=2" alt="" aria-hidden="true" />
             <span class="brand-name">Library Admin</span>
         </a>
+        <button type="button" class="theme-toggle" aria-label="@(_isDark ? "Switch to light mode" : "Switch to dark mode")" @onclick="ToggleThemeAsync">
+            <Icon Name="@(_isDark ? "sun" : "moon")" />
+            <span>@(_isDark ? "Light" : "Dark")</span>
+        </button>
     </header>
 
     <aside class="sidebar @(_menuOpen ? "open" : null)">
         <NavMenu OnNavigate="CloseMenu" />
+        <footer class="copyright">&copy; @DateTime.Now.Year Svetlana Vrabie. All rights reserved.</footer>
     </aside>
 
     @if (_menuOpen)

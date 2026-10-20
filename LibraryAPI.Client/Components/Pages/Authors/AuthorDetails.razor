@@ -16,7 +16,7 @@ else
 {
     <PageHeader Title="@_author.Name" Subtitle="Author details" BackHref="authors" BackText="Authors">
         <Actions>
-            <button type="button" class="btn btn-danger" @onclick="AskDeleteAuthor">Delete author</button>
+            <button type="button" class="btn btn-danger" @onclick="AskDeleteAuthor"><Icon Name="trash" />Delete author</button>
         </Actions>
     </PageHeader>
 
@@ -28,7 +28,7 @@ else
 
     <div class="section-title">
         <h2>Courses</h2>
-        <a class="btn btn-primary" href="authors/@AuthorId/courses/new">Add course</a>
+        <a class="btn btn-primary" href="authors/@AuthorId/courses/new"><Icon Name="plus" />Add course</a>
     </div>
 
     @if (_coursesError is not null)
@@ -52,8 +52,8 @@ else
                         <p>@(string.IsNullOrWhiteSpace(course.Description) ? "No description provided." : course.Description)</p>
                     </div>
                     <div class="course-actions">
-                        <a class="btn btn-ghost" href="authors/@AuthorId/courses/@course.Id/edit">Edit</a>
-                        <button type="button" class="btn btn-ghost danger" @onclick="() => AskDeleteCourse(course)">Delete</button>
+                        <a class="btn btn-ghost" href="authors/@AuthorId/courses/@course.Id/edit"><Icon Name="edit" />Edit</a>
+                        <button type="button" class="btn btn-ghost danger" @onclick="() => AskDeleteCourse(course)"><Icon Name="trash" />Delete</button>
                     </div>
                 </li>
             }

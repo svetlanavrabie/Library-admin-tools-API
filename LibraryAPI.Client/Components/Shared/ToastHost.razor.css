@@ -21,8 +21,8 @@
     background: var(--color-surface);
 }
 
-.toast.success { border-color: var(--color-success); background: var(--color-success-soft); color: #14532d; }
-.toast.error { border-color: var(--color-danger); background: var(--color-danger-soft); color: #7f1d1d; }
+.toast.success { border-color: var(--color-success); background: var(--color-success-soft); color: var(--color-success-text); }
+.toast.error { border-color: var(--color-danger); background: var(--color-danger-soft); color: var(--color-danger-text); }
 
 .toast button {
     background: transparent;
