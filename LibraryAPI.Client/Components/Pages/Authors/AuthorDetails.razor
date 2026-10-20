@@ -1,0 +1,69 @@
+@page "/authors/{AuthorId:guid}"
+
+<PageTitle>@(_author?.Name ?? "Author") - Library Admin</PageTitle>
+
+@if (_isLoading)
+{
+    <StatePanel Kind="StateKind.Loading" Title="Loading author..." />
+}
+else if (_author is null)
+{
+    <StatePanel Kind="StateKind.Error" Title="@(_notFound ? "Author not found" : "Could not load author")" Message="@_errorMessage">
+        <a class="btn btn-primary" href="authors">Back to authors</a>
+    </StatePanel>
+}
+else
+{
+    <PageHeader Title="@_author.Name" Subtitle="Author details" BackHref="authors" BackText="Authors">
+        <Actions>
+            <button type="button" class="btn btn-danger" @onclick="AskDeleteAuthor"><Icon Name="trash" />Delete author</button>
+        </Actions>
+    </PageHeader>
+
+    <section class="card profile">
+        <div><span class="label">Name</span><strong>@_author.Name</strong></div>
+        <div><span class="label">Age</span><strong>@_author.Age</strong></div>
+        <div><span class="label">Main category</span><span class="badge">@_author.MainCategory</span></div>
+    </section>
+
+    <div class="section-title">
+        <h2>Courses</h2>
+        <a class="btn btn-primary" href="authors/@AuthorId/courses/new"><Icon Name="plus" />Add course</a>
+    </div>
+
+    @if (_coursesError is not null)
+    {
+        <StatePanel Kind="StateKind.Error" Title="Could not load courses" Message="@_coursesError">
+            <button type="button" class="btn btn-primary" @onclick="LoadCoursesAsync">Try again</button>
+        </StatePanel>
+    }
+    else if (_courses.Count == 0)
+    {
+        <StatePanel Kind="StateKind.Empty" Title="No courses yet" Message="This author has no courses. Add the first one." />
+    }
+    else
+    {
+        <ul class="courses">
+            @foreach (var course in _courses)
+            {
+                <li class="card course">
+                    <div class="course-body">
+                        <h3>@course.Title</h3>
+                        <p>@(string.IsNullOrWhiteSpace(course.Description) ? "No description provided." : course.Description)</p>
+                    </div>
+                    <div class="course-actions">
+                        <a class="btn btn-ghost" href="authors/@AuthorId/courses/@course.Id/edit"><Icon Name="edit" />Edit</a>
+                        <button type="button" class="btn btn-ghost danger" @onclick="() => AskDeleteCourse(course)"><Icon Name="trash" />Delete</button>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+}
+
+<ConfirmDialog Visible="_confirmTarget != DeleteTarget.None"
+               IsBusy="_isDeleting"
+               Title="@(_confirmTarget == DeleteTarget.Author ? "Delete author" : "Delete course")"
+               Message="@ConfirmMessage"
+               OnConfirm="DeleteConfirmedAsync"
+               OnCancel="CancelDelete" />

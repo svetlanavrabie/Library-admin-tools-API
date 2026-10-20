@@ -1,0 +1,11 @@
+@implements IDisposable
+
+<div class="toasts" aria-live="polite">
+    @foreach (var notification in Notifications.Notifications)
+    {
+        <div class="toast @notification.Kind.ToString().ToLowerInvariant()" role="@(notification.Kind == NotificationKind.Error ? "alert" : "status")">
+            <span>@notification.Message</span>
+            <button type="button" aria-label="Dismiss notification" @onclick="() => Notifications.Dismiss(notification.Id)">&times;</button>
+        </div>
+    }
+</div>

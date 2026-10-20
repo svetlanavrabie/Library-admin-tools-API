@@ -1,0 +1,39 @@
+@inherits LayoutComponentBase
+
+<div class="shell">
+    <header class="topbar">
+        <button type="button" class="menu-toggle" aria-label="Toggle navigation" aria-expanded="@_menuOpen" @onclick="ToggleMenu">
+            <span></span><span></span><span></span>
+        </button>
+        <a class="brand" href="">
+            <img class="brand-mark" src="/favicon.svg?v=2" alt="" aria-hidden="true" />
+            <span class="brand-name">Library Admin</span>
+        </a>
+        <button type="button" class="theme-toggle" aria-label="@(_isDark ? "Switch to light mode" : "Switch to dark mode")" @onclick="ToggleThemeAsync">
+            <Icon Name="@(_isDark ? "sun" : "moon")" />
+            <span>@(_isDark ? "Light" : "Dark")</span>
+        </button>
+    </header>
+
+    <aside class="sidebar @(_menuOpen ? "open" : null)">
+        <NavMenu OnNavigate="CloseMenu" />
+        <footer class="copyright">&copy; @DateTime.Now.Year Svetlana Vrabie. All rights reserved.</footer>
+    </aside>
+
+    @if (_menuOpen)
+    {
+        <div class="backdrop" @onclick="CloseMenu"></div>
+    }
+
+    <main class="content">
+        @Body
+    </main>
+</div>
+
+<ToastHost />
+
+<div id="blazor-error-ui" data-nosnippet>
+    An unhandled error has occurred.
+    <a href="." class="reload">Reload</a>
+    <span class="dismiss" role="button" aria-label="Dismiss">&times;</span>
+</div>

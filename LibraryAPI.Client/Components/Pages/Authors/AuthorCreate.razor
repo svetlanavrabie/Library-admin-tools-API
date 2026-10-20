@@ -1,0 +1,56 @@
+@page "/authors/new"
+@inject NavigationManager Navigation
+
+<PageTitle>New author - Library Admin</PageTitle>
+
+<PageHeader Title="New author" Subtitle="Register a new author in the library." BackHref="authors" BackText="Authors" />
+
+<div class="card">
+    <EditForm Model="_form" OnValidSubmit="SubmitAsync" FormName="author-create">
+        <DataAnnotationsValidator />
+
+        @if (_serverErrors.Count > 0)
+        {
+            <ul class="validation-summary-list" role="alert">
+                @foreach (var error in _serverErrors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        }
+
+        <fieldset class="form-grid" disabled="@_isSubmitting">
+            <div class="field">
+                <label for="firstName">First name</label>
+                <InputText id="firstName" @bind-Value="_form.FirstName" />
+                <ValidationMessage For="() => _form.FirstName" />
+            </div>
+            <div class="field">
+                <label for="lastName">Last name</label>
+                <InputText id="lastName" @bind-Value="_form.LastName" />
+                <ValidationMessage For="() => _form.LastName" />
+            </div>
+            <div class="field">
+                <label for="dateOfBirth">Date of birth</label>
+                <InputDate id="dateOfBirth" @bind-Value="_form.DateOfBirth" />
+                <ValidationMessage For="() => _form.DateOfBirth" />
+            </div>
+            <div class="field">
+                <label for="dateOfDeath">Date of death (optional)</label>
+                <InputDate id="dateOfDeath" @bind-Value="_form.DateOfDeath" />
+            </div>
+            <div class="field full">
+                <label for="mainCategory">Main category</label>
+                <InputText id="mainCategory" @bind-Value="_form.MainCategory" />
+                <ValidationMessage For="() => _form.MainCategory" />
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary" disabled="@_isSubmitting">
+                @(_isSubmitting ? "Saving..." : "Create author")
+            </button>
+            <a class="btn btn-secondary" href="authors">Cancel</a>
+        </div>
+    </EditForm>
+</div>
